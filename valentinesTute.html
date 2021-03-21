@@ -1,0 +1,180 @@
+<html>
+<head>
+	<title> 
+		Valentines Flowers - Order your flowers online 
+	</title>
+    <link rel="stylesheet" href="style.css" type="text/css" >
+    
+</head>
+
+<body>
+
+<div class = 'container' id = "container"> 
+
+    <h1> Valentines Flowers </h1> 
+    <div class = 'product' id = "product1"> 
+        <img id = 'whiteimg' src = "white.jpeg" height = '240px' width = '234px' alt = 'White Flower Bouquet'>
+        
+        <div class = 'description'> 
+            <br> White Bouquet 
+            <div class = 'price' id = "whitePrice"> 
+                <br>£24 
+            </div>
+        </div>
+    </div>
+
+    <div class = 'product' id = "product2">
+        <img id = 'pinkimg' src = "pink.jpeg" height = '240px' width = '234px' alt = 'Pink Flower Bouquet'>
+        
+        <div class = 'description'> 
+            <br>Pink Bouquet 
+            <div class = 'price' id = "pinkPrice"> 
+                <br>£25 
+            </div>
+        </div>
+    </div>
+
+    <div class = 'product' id = "product3">
+        <img id = 'redimg' src = "red.jpeg" height = '240px' width = '234px' alt = 'Red Flower Bouquet'>
+        
+        <div class = 'description'> 
+            <br> Red Bouquet 
+            <div class = 'price' id= "redPrice"> 
+                <br>£20 
+            </div>
+        </div>
+    </div>
+
+    <div class = "labelOrder"> 
+        Your Order:
+        <div id = "orderDescription"> 
+        </div>
+        <div class = "product" id = "order"> 
+        </div>
+    </div>
+
+    <form>
+        Bouquet Options:
+        <select name = 'bouquetOptions' id ='bouquetOptions'>
+            <option value = "pleaseSelect" id = 'pleaseSelect' selected disabled>Please Select</option>
+            <option value = "withChampagne" id = "withChampagne">With Champagne</option>
+            <option value = "extra" id = "extra">50% Extra Flowers</option>
+            <option  value = "extraWithChampagne" id = "extraWithChampagne">50% Extra Flowers and a Champagne</option>
+        </select>
+
+        Bouquet Colour:
+        <label><input type = 'radio' name = 'colour' id = 'white' value = 'white'/>White</label>
+        <label><input type = 'radio' name = 'colour' id = 'pink' value = 'pink'/>Pink</label>
+        <label><input type = 'radio' name = 'colour' id = 'red' value = 'red'/>Red</label>
+     
+        <input type = 'button' id="orderBtn" value = 'Place Your Order' /> 
+        <input id = "reset" type = 'reset' value = 'Clear Your Order'/>  
+    </form>
+</div>
+
+<script>
+    let totalPrice = 0; //final total of the user
+    function selectOption() {
+        let e = document.getElementById("bouquetOptions");
+        let strUser = e.options[e.selectedIndex].value;
+        return strUser;
+    }
+
+   
+    document.getElementById("white").addEventListener('click', function () {
+        displayBouquet(this.value);
+    });
+    document.getElementById("pink").addEventListener('click', function () {
+        displayBouquet(this.value);
+    });
+    document.getElementById("red").addEventListener('click', function () {
+        displayBouquet(this.value);
+    });
+
+    document.getElementById('bouquetOptions').addEventListener('change', function () {
+        CheckOptions(this.form);
+    });
+
+    function CheckOptions() {
+        let option = document.getElementById("bouquetOptions").value;
+        if (option == "withChampagne" || option == "extraWithChampagne") {
+            document.getElementById('whiteimg').src = "white-gift.jpeg";
+            document.getElementById('pinkimg').src = "pink-gift.jpeg";
+            document.getElementById('redimg').src = "red-gift.jpeg";
+
+            let prices = [24, 25, 50]; 
+            var totalPrice;
+            if ((selectOption() == "extra") || (selectOption() == "extraWithChampagne")) {
+                document.getElementById("whitePrice").innerHTML = "£" + prices[0] * 1.5;
+              
+                document.getElementById("pinkPrice").innerHTML = "£" + prices[1] * 1.5;
+                document.getElementById("redPrice").innerHTML = "£" + prices[2] * 1.5;
+            } else {
+                document.getElementById("whitePrice").innerHTML = "£" + prices[0];
+                
+                document.getElementById("pinkPrice").innerHTML = "£" + prices[1];
+                document.getElementById("redPrice").innerHTML = "£" + prices[2];
+            }
+        } else {
+            document.getElementById('whiteimg').src = "white.jpeg";
+            document.getElementById('pinkimg').src = "pink.jpeg";
+            document.getElementById('redimg').src = "red.jpeg";
+        }
+    }
+
+    function displayBouquet(bouquet) {
+        var product = bouquet;
+        switch (product) {
+            case "white":
+                var section = document.getElementById("product1");
+                document.getElementById("order").innerHTML = section.innerHTML;
+                totalPrice = document.getElementById("whitePrice").innerHTML;
+                break;
+            case "pink":
+                var section = document.getElementById("product2");
+                document.getElementById("order").innerHTML = section.innerHTML;
+                totalPrice = document.getElementById("pinkPrice").innerHTML;
+                break;
+            case "red":
+                var section = document.getElementById("product3");
+                document.getElementById("order").innerHTML = section.innerHTML;
+                totalPrice = document.getElementById("redPrice").innerHTML;
+                break;
+
+        }
+
+
+    }
+
+    document.getElementById("reset").addEventListener("click", function resetOrder() {
+        document.getElementById('whiteimg').src = "white.jpeg";
+        document.getElementById('pinkimg').src = "pink.jpeg";
+        document.getElementById('redimg').src = "red.jpeg";
+        document.getElementById('whitePrice').innerHTML = "£24";
+        document.getElementById('pinkPrice').innerHTML = "£25";
+        document.getElementById('redPrice').innerHTML = "£20";
+        document.getElementById("order").innerHTML = "";
+    });
+
+    document.getElementById('product1').addEventListener('click', function () {
+        displayBouquet('white');
+        document.getElementById('white').checked = true;
+    });
+
+    document.getElementById('product2').addEventListener('click', function () {
+        displayBouquet('pink');
+        document.getElementById('pink').checked = true;
+    });
+
+    document.getElementById('product3').addEventListener('click', function () {
+        displayBouquet('red');
+        document.getElementById('red').checked = true;
+    });
+
+    document.getElementById("orderBtn").addEventListener("click", function(){
+        alert("Your total price is "+ totalPrice);
+    })
+    
+</script>
+</body>
+</html>
